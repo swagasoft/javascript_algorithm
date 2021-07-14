@@ -1,5 +1,6 @@
 
-
+//sliding window
+    
 const maxSubArraySum = (arr, num)=> {
 
    let maxSum = 0;

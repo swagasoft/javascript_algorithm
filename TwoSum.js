@@ -1,3 +1,11 @@
+/*
+Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
+
+You can return the answer in any order.
+*/
+
 var nums  = [2,7,11,15];
 var target  = 9;
 
@@ -8,19 +16,15 @@ var  myMap = new Map();
 
 for (let i = 0; i < nums.length; i++) {
     const element = nums[i];
-    console.log('Element: ', element);
-    console.log('index: ', i);
     let result  = target  - element;
     if(myMap.has(result)){
-      console.log('SS', [myMap.get(result), i]);
-      return;
+      return  [myMap.get(result), i];
     }else{
-        console.log('Setting', element + ' '+ i);
         myMap.set(element, i);
     }
 }
-console.log('Allll',myMap)
 }
-twoSum(nums, target);
+
+console.log(twoSum(nums, target));
     
     
