@@ -12,4 +12,4 @@ const reverseNum = (num)=> {
     return ref;
 }
 
-console.log('final ', reverseNum(123));
+console.log('final ', reverseNum(149));

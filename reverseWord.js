@@ -13,7 +13,7 @@ const reverseWord = (str)=> {
 
     }
     // join the word array
-    console.log(reverseWord.join(" "))
+    return reverseWord.join(" ")
 }
 
 let str1 = "Javascript is Best";

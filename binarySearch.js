@@ -8,7 +8,6 @@ const binarySearch = (arr, target)=> {
     let loop  = 0;
 
     while(arr[middle] !== target && start <= end){
-        console.log('start', start,middle, end);
         loop += 1;
         if(target < arr[middle]){
             end =  middle  - 1;
