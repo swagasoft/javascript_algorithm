@@ -17,4 +17,4 @@ const bubbleSort = (arr)=> {
 }
 
 
-console.log(bubbleSort([,5,4,3,7,0,9,8,1,2]));
+console.log(bubbleSort([5,4,3,7,0,9,8,1,2]));
