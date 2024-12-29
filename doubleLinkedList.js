@@ -1,158 +1,119 @@
-class Node {
-    constructor(val) {
+"use strict";
+exports.__esModule = true;
+var CustomNode = /** @class */ (function () {
+    function CustomNode(val) {
         this.val = val;
         this.next = null;
         this.prev = null;
-        
-        
     }
-}
-
-class DoubleLinkedList {
-    constructor() {
+    return CustomNode;
+}());
+var DoubleLinkedList = /** @class */ (function () {
+    function DoubleLinkedList() {
         this.head = null;
         this.tail = null;
-            this.length = 0
-        
+        this.capacity = 0;
     }
-
-
-    push(val){
-        let newNode = new Node(val);
-        if(this.length === 0){
+    DoubleLinkedList.prototype.push = function (val) {
+        var newNode = new CustomNode(val);
+        if (this.capacity === 0) {
             this.head = newNode;
             this.tail = newNode;
-        }else{
+        }
+        else {
             this.tail.next = newNode;
             newNode.prev = this.tail;
             this.tail = newNode;
         }
-        this.length  += 1;
-        return this;
-    }
-
-    pop(){
-        if(!this.head) return undefined;
-        let removeableNode = this.tail;
-        if(this.length === 1){
+        this.capacity += 1;
+    };
+    DoubleLinkedList.prototype.pop = function () {
+        if (!this.head) {
+            return undefined;
+        }
+        var removableNode = this.tail;
+        if (this.capacity === 1) {
             this.head = null;
             this.tail = null;
-        }else{
-            this.tail = removeableNode.prev;
+        }
+        else {
+            this.tail = removableNode.prev;
             this.tail.next = null;
-            removeableNode.prev = null;
+            removableNode.prev = null;
         }
-
-        this.length -= 1;
-        return removeableNode;
-    }
-
-
-    shift(){
-        if(this.length === 0) return undefined;
-            let oldHead = this.head;
-        if(this.length === 1){
+        this.capacity -= 1;
+        return removableNode || undefined;
+    };
+    //  remove from head
+    DoubleLinkedList.prototype.shift = function () {
+        if (this.capacity === 0)
+            return undefined;
+        var removeAbleHead = this.head;
+        if (this.capacity === 1) {
             this.head = null;
             this.tail = null;
-        }else{
-            this.head = oldHead.next;
-            this.head.prev = null;
-            oldHead.next = null;
         }
-        this.length -=1;
-        return oldHead;
-    }
-
-    unShift(val){
-        let newNode = new Node(val);
-        if(this.length === 0){
+        else {
+            this.head = removeAbleHead.prev;
+            this.head.prev = null;
+            removeAbleHead.next = null;
+            removeAbleHead.prev = null;
+        }
+        this.capacity -= 1;
+        return removeAbleHead || undefined;
+    };
+    // Add to the front
+    DoubleLinkedList.prototype.unshift = function (val) {
+        var newNode = new CustomNode(val);
+        if (this.capacity === 0) {
             this.head = newNode;
             this.tail = newNode;
-        }else{
+        }
+        else {
             this.head.prev = newNode;
             newNode.next = this.head;
             this.head = newNode;
         }
-        this.length ++;
+        this.capacity++;
         return this;
-    }
-
-    get(index){
-        if(index < 0 || index >= this.length)return null;
-        let current, count;
-        if(index <= this.length/2){
-         count = 0;
-        current =  this.head;
-            console.log('START FROM HEAD')
-
-        while( count != index){
-            current =  current.next;
-            count++;
+    };
+    DoubleLinkedList.prototype.get = function (index) {
+        if (index < 0 || index > this.capacity) {
+            return null;
         }
-        return current;
-        }else{
-            //  start from the tails
-            console.log('START FROM END')
-             count =  this.length - 1;
-            current = this.tail;
-            while(count != index){
-                 current = this.tail.prev;
-                count--;
+        if (index < this.capacity / 2) {
+            //  start from head
+            var current = this.head;
+            var counter = 0;
+            while (counter !== index) {
+                current = current.next;
+                counter++;
             }
             return current;
         }
-    
-    }
-
-
-    set(index, val){
-        var  foundNode = this.get(index);
-        if(foundNode != null){
-            foundNode.val = val;
-            return true;
+        else {
+            //  start from end
+            var counter = this.capacity - 1;
+            var current = this.tail;
+            while (counter !== index) {
+                current = current.prev;
+                counter -= 1;
+            }
+            return current;
         }
-
-        return false;
-    }
-
-    insert(index, val){
-        if(index < 0  || index > this.length) return false;
-        if(index === 0) return !!this.unShift(val)
-        if(index === this.length) return !!this.push(val);
-
-        let newNode =  new Node(val);
-        let beforeNode = this.get(index - 1);
-        let afterNode =  beforeNode.next;
+    };
+    DoubleLinkedList.prototype.insert = function (index, value) {
+        if (index < 0 || index > this.capacity) {
+            return false;
+        }
+        var newNode = new CustomNode(value);
+        var beforeNode = this.get(index - 1);
+        var afterNode = beforeNode.next;
         beforeNode.next = newNode, newNode.prev = beforeNode;
-
         afterNode.prev = newNode, newNode.next = afterNode;
-        this.length += 1;
+        this.capacity += 1;
         return true;
-    }
-
-    remove(index){
-        if(index < 0  || index >= this.length) return undefined;
-        if(index === 0) return this.shift();
-        if (index ===  this.length - 1) return this.pop();
-        var removedNode = this.get(index);
-        // let beforeNode = removedNode.prev;
-        // let afterNode = removedNode.next;
-        // afterNode.prev = beforeNode;
-        // beforeNode.next = afterNode;
-
-        removedNode.prev.next = removedNode.next;
-        removedNode.next.prev = removedNode.prev;
-
-        removedNode.next = null;
-        removedNode.prev = null;
-        this.length --;
-        return removedNode;
-        
-    }
-}
-
-
-let list = new DoubleLinkedList();
-list.push(1)
-list.push(2)
-list.push(3)
+    };
+    return DoubleLinkedList;
+}());
+exports["default"] = DoubleLinkedList;

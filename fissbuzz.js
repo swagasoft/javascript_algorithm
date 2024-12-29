@@ -27,4 +27,4 @@ var fizzBuzz = (number) => {
 
 
 
-fizzBuzz(15);
+fizzBuzz(100);
